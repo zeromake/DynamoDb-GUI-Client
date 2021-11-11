@@ -174,6 +174,7 @@ async function getRecords(
   try {
     data = await dbClient
       .scan({
+        ...params,
         TableName: currentTable,
         Limit: state.limit,
         ExclusiveStartKey: state.evaluatedKeys[state.lastEvaluatedKeyIndex - 1],
@@ -186,7 +187,6 @@ async function getRecords(
           [':' + state.filterParams.filterColumn + '1']: state.filterParams
             .filterValue,
         },
-        ...params,
       })
       .promise();
   } catch (err) {

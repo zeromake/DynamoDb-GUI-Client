@@ -1,9 +1,7 @@
 import { app, protocol, BrowserWindow, shell, Menu } from 'electron';
 import defaultMenu from 'electron-default-menu';
-import {
-  createProtocol,
-  installVueDevtools,
-} from 'vue-cli-plugin-electron-builder/lib';
+import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
+import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -11,7 +9,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 let win: any;
 
 // Standard scheme must be registered before the app is ready
-protocol.registerStandardSchemes(['app'], { secure: true });
+protocol.registerSchemesAsPrivileged([{ scheme: 'app',  privileges: {secure: true }}] );
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
@@ -66,7 +64,7 @@ app.on('ready', async () => {
   Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
-    await installVueDevtools();
+    await installExtension(VUEJS_DEVTOOLS);
   }
   createWindow();
 });

@@ -36,7 +36,7 @@ export default class App extends Vue {}
 </script>
 
 <style lang="stylus">
-@import url('https://fonts.googleapis.com/css?family=Roboto')
+@import url('https://fonts.font.im/css?family=Roboto')
 
 *
   padding 0
